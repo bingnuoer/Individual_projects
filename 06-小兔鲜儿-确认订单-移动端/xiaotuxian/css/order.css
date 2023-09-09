@@ -1,0 +1,241 @@
+
+/* 整体背景 */
+body {
+    background-color: #f7f7f8;
+}
+
+/* 公共样式 */
+.red {
+    color: #cf4444;
+}
+
+.pannel {
+    margin-bottom: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+
+}
+
+/* 主体内容：滑动查看 */
+.main {
+    /* 80:为了主体内容不被固定定位的盒子盖住 */
+    padding: 12px 11px 80px;
+}
+
+/* 用户信息 */
+.user_msg {
+    display: flex;
+    padding: 15px 0 15px 11px;
+    align-items: center;
+}
+
+.main .user_msg .location {
+    margin-right: 10px;
+    width: 30px;
+    height: 30px;
+    background-image: linear-gradient(90deg, 
+		#6fc2aa 5%, 
+		#54b196 100%);
+        border-radius: 50%;
+    text-align: center;
+    line-height: 30px;
+    color: #ffffff;
+}
+
+.main .user_msg .user {
+    flex: 1;   
+}
+
+.main .user_msg .user .top {
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    color: #262626;
+}
+
+.main .user_msg .user .top h5 {
+    font-style: 15px;
+    width: 50px;
+}
+
+.main .user_msg .user .bottom {
+    margin-top: 5px;
+    font-size: 12px;
+    color: #333;
+}
+
+.main .user_msg .more{
+    width: 44px;
+    height: 44px;
+    /* background-color: #dff8ff; */
+    text-align: center;
+    line-height: 44px;
+    color: #808080;
+}
+
+/* 商品 */
+.main .goods {
+    display: flex;
+    padding: 11px 0 11px 11px;
+}
+
+.main .goods .pic {
+    /*base.css中设置img的width=100%,img跟着父级尺寸走， 用图片父级控制图片 */
+    margin-right: 12px;
+    /* 给图片父级加图片宽高的尺寸，因为base.css中设置img的width=100%,img跟着父级尺寸走，更灵活 */
+    width: 85px;
+    height: 85px;
+}
+
+.main .goods .info {
+    flex: 1;
+}
+
+.main .goods .count {
+    width: 44px;
+    height: 44px;
+    /* background-color: pink; */
+    text-align: center;
+    line-height: 44px;
+}
+
+.goods .info h5 {
+    font-size: 13px;
+    color: #262626;
+    font-weight: 400;
+}
+
+.goods .info p {
+    margin: 5px 0;
+    width: 95px;
+	height: 16px;
+	background-color: #f7f7f8;
+	border-radius: 2px;
+    font-size: 11px;
+    color: #888888;
+}
+
+.goods .info p span:first-child {
+    margin-right: 5px;
+}
+
+.goods .info .price {
+    font-size: 12px;
+}
+
+.goods .info .price i {
+    font-size: 16px;
+}
+
+.goods .info .price span:last-child {
+    margin-left: 5px;
+    color: #999999;
+    /* 删除线 */
+    text-decoration: line-through;
+}
+
+/* 其他信息 */
+.rest,
+.sum_pic {
+    padding: 15px;
+}
+
+.rest div,
+.sum_pic div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.rest div:last-child,
+.sum_pic div:last-child {
+    margin-bottom: 0;
+}
+
+/* 找到第1个和第3个div设置主轴对齐方式 */
+.rest div:nth-child(2n+1),
+.sum_pic div {
+    justify-content: space-between;
+}
+
+.rest h5,
+.rest p,
+.sum_pic h5,
+.sum_pic div:nth-child(1) p,
+.sum_pic div:nth-child(2) p {
+    font-size: 13px;
+    color: #262626;
+    font-weight: 400;
+}
+
+.rest div:nth-child(2) p {
+    margin-left: 20px;
+    font-size: 12px;
+    color: #989898;
+}
+
+.rest div:nth-child(3) i {
+    margin-left: 3px;
+    vertical-align: middle;
+    line-height: 13px;
+    color: #808080;
+}
+
+/* 商品总价 */
+/* 层叠属性 到“其他信息”中 */
+
+/* 主体内容：滑动查看 */
+
+/* 底部支付：固定定位 */
+.pay {   
+    position: fixed;
+    left: 0;
+    bottom: 0;
+
+    /* 两div水平对齐 */
+    display: flex;
+    /* 主轴对齐方式：盒子水平之间有间距 */
+    justify-content: space-between;
+    /* 侧轴对齐方式：垂直居中 */
+    align-items: center;
+
+    padding: 0 11px;
+    /* 固定定位盒子脱标，需要设置宽 */
+    width: 100%;
+    height: 80px;
+    /* background-color: pink; */
+    border-top: 1px solid #ededed;
+}
+
+.pay .left {
+    /* 浏览器要求最小字号12px */
+    font-size: 12px;
+    /* vertical-align: middle; */
+    color: #1e1e1e;
+}
+
+.pay .left span {
+    margin-left: 12px;
+}
+
+.pay .left i {
+    font-size: 20px;
+
+}
+
+.pay .right a {
+    display: block;
+    width: 90px;
+    height: 35px;
+    /* px大厨识别出来的渐变背景 */
+    background-image: linear-gradient(90deg, 
+		#6fc2aa 5%, 
+		#54b196 100%);
+    border-radius: 3px;
+
+    text-align: center;
+    line-height: 35px;
+    font-size: 13px;
+    color: #ffffff;
+}
+/* 底部支付：固定定位 */

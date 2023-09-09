@@ -1,0 +1,125 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+/* 插入背景图 */
+
+/* 图片是浏览器高，html和body同时设置高100% */
+html {
+    height: 100%;
+}
+
+body {
+    position: relative;
+    height: 100%;
+    /* background-image: url(../images/f1_1.jpg);
+    background-repeat: no-repeat; */
+    /* 复合属性写法:图片，不重复平铺，居中 */
+    background: url(../images/f1_1.jpg) no-repeat center 0;
+
+    /* 缩放背景图 */
+    /*图片等比例缩放，当宽度或高度和盒子尺寸相等，图片就不再缩放*/
+    /* background-size: contain; */
+    /* 图片等比例缩放，图片完全覆盖到整个盒子，可能会导致图片显示不全 */
+    background-size: cover;
+}
+
+/* 插入动画 */
+/* 1.img引入图片，用定位控制位置
+   2.定义动画，使用动画 */
+
+.cloud img {
+    position: absolute;
+    left: 50%;
+    top: 0;
+}
+/* 每个云彩不同移动速度，分别设置动画 */
+.cloud img:nth-child(1) {
+    margin-left: -200px;
+    top: 20px;
+    animation: cloud 1s infinite alternate;
+}
+.cloud img:nth-child(2) {
+    margin-left: 400px;
+    top: 100px;
+    animation: cloud 1s infinite alternate .3s;
+}
+.cloud img:nth-child(3) {
+    margin-left: -550px;
+    top: 200px;
+    animation: cloud 1s infinite alternate .7s;
+}
+
+/* 云彩动画 */
+@keyframes cloud {
+    to{
+        transform: translateX(20px);
+    }
+}
+
+/* 热气球 */
+/* 热气球定位 */
+.ballon img {
+    position: absolute;
+    margin-left: -360px;
+    left: 50%;
+    top: 120px;
+    animation: ballon 2s infinite alternate linear;
+
+}
+/* 热气球动画 */
+@keyframes ballon {
+    to{
+        transform: translateY(40px);
+    }
+}
+
+/* 版心中间图片 */
+.banner .lu img {
+    position: absolute;
+    left: 50%;
+    top: 80px;
+    margin-left: 140px;
+}
+
+.banner .word img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -320px;
+    margin-top: -140px;
+}
+
+/* 底标签 */
+/* 底标签定位 */
+.bottom img {
+    position: absolute;
+    left: 400px;
+    bottom: 40px; 
+    /* background-size: ; */
+}
+
+.bottom img:nth-child(1) {
+    animation: bottom .6s infinite alternate;
+}
+.bottom img:nth-child(2) {
+    margin-left: 180px;
+    animation: bottom .6s infinite alternate .2s;
+}
+.bottom img:nth-child(3) {
+    margin-left: 360px;
+    animation: bottom .6s infinite alternate .3s;
+}
+.bottom img:nth-child(4) {
+    margin-left: 540px;
+    animation: bottom .6s infinite alternate .4s;
+}
+
+/* 底标签定义动画 */
+@keyframes bottom {
+    to {
+        transform: translateY(-30px);       
+    }
+}
+
+

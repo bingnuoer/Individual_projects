@@ -1,0 +1,266 @@
+/* 主体内容 */
+.xtx_body {
+    padding: 30px 0 85px;
+    background-color: #f6f6f6;
+}
+
+.xtx_body .wrapper {
+    display: flex;
+}
+
+.xtx_body .aside {
+    margin-right: 18px;
+    width: 227px;
+    /* 设置一个最小高度，后面可以靠内容撑开高度 */
+    min-height: 500px;
+    background-color: pink;
+}
+
+.xtx_body .main {
+    /* width: ;  用flex知识,剩下的全是主体内容的宽*/
+    flex: 1;
+    min-height: 500px;
+}
+
+/* 用户账户概览 */
+.xtx_body .overview {
+    display: flex;
+    margin-bottom: 18px;
+    padding: 20px 0;
+    height: 132px;
+    background-color: #fff;
+}
+
+/* 2个div各占1份，把main宽平分 */
+.xtx_body .overview div {
+    /* a水平排一行 */
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex: 1;
+    /* 图片、文字居中 */
+    text-align: center;
+}
+
+.xtx_body .overview div:first-child {
+    border-right: 1px solid #f4f4f4;
+}
+
+.xtx_body .overview a img{
+    /* 右侧的字设置大字号后浏览器有默认间距，只给图片设置间距 */
+    margin-bottom: 10px;
+    width: 25px;
+}
+
+.xtx_body .overview a:nth-child(3) img {
+    width: 18px;
+}
+
+.xtx_body .overview a p {
+    font-size: 16px;
+}
+
+.xtx_body .overview a span {
+    font-size: 25px;
+    color: #e05e30;
+}
+
+/* 订单-公共样式 */
+.pannel {
+    margin-bottom: 20px;
+    padding: 28px 18px;
+    background-color: #fff;
+}
+
+.pannel .pannel_title {
+    display: flex;
+    justify-content: space-between;
+    height: 45px;
+    border-bottom: 1px solid #f4f4f4;
+}
+
+.pannel .pannel_title h4 {
+    font-size: 22px;
+    font-weight: 400;
+    color: #333;
+}
+
+.pannel .pannel_title a {
+    margin-top: 8px;
+    font-size: 16px;
+    color: #999;
+}
+/* 订单-公共样式 */
+
+/* 订单 */
+.order .content li {
+    display: flex;
+    align-items: center;
+    /* 避免两条线重叠在一起 */
+    margin-top: -1px;
+    margin-bottom: 20px;
+    height: 132px;
+    background-color: #fff;
+    border: solid 1px #f4f4f4;
+}
+
+.order .content li:last-child {
+    margin-bottom: 0;
+}
+
+.order .content .goods {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    padding: 17px 5px 14px 12px;
+}
+
+.order .goods .pic {
+    width: 107px;
+    height: 107px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #333;
+}
+
+
+.order .goods .txt {
+    /* 文字溢出省略号，宽0配合flex使用 */
+    /*溢出的时候显示省略号*/
+    /* 因为弹性盒子的尺寸可以被内容撑开，不换行的文字可以撑开这个盒子的尺寸 */
+    flex: 1;
+    width: 0;
+    margin-right: 128px;
+    font-size: 14px;
+    color: #999;
+}
+/* 文字溢出省略号，配合父级宽度使用 */
+.order .goods .txt h5 {
+    /* 检索文字溢出使用省略号 */
+    text-overflow: ellipsis;
+    /* 禁止文字自动换行 */
+    white-space: nowrap;
+    /* 溢出隐藏 */
+    overflow: hidden;
+}
+
+.order .content .status {
+    width: 120px;
+    font-size: 14px;
+    color: #e05e30;
+}
+
+.order .content .status .waite {
+    margin-left: 5px;
+}
+
+.order .content .status .look_loc {
+    color: #999;
+}
+
+.order .content .pay {
+    width: 200px;
+    border-left: 1px solid #e8e8e8;
+    border-right: 1px solid #e8e8e8;
+}
+
+.order .content .action {
+    width: 180px;
+}
+
+.order .content .action a:first-child {
+    margin-bottom: 16px;
+    width: 100px;
+	height: 30px;
+	background-color: #5eb69c;
+	border-radius: 2px;
+    color: #fff;
+    text-align: center;
+    line-height: 30px;
+}
+
+.order .content .common {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #333;
+}
+
+/* 收藏 */
+.collect .content,
+.foot .content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.collect .content div,
+.foot .content div {
+    width: 180px;
+    height: 260px;
+}
+
+.collect .content .pic,
+.foot .content .pic {
+    position: relative;
+    display: flex;
+    justify-content: center;
+} 
+
+.collect .content img,
+.foot .content img {    
+    width: 160px;
+    height: 160px;
+}
+
+.collect .content .text,
+.foot .content .text {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #333;
+}
+
+.collect .content .price,
+.foot .content .price {
+    font-size: 17px;
+    color: #9a2e1f;
+}
+
+.collect .content .price span,
+.foot .content .price span {
+    font-size: 22px;
+}
+
+.collect .content div:nth-child(2) .pic span,
+.foot .content div:nth-child(2) .pic span {
+    position: absolute;
+    left: 0;
+    top: 0;
+    content: "";
+    width: 28px;
+	height: 50px;
+	border-radius: 3px;
+	border: solid 1px #5eb69c;
+    font-size: 18px;
+    color: #5eb69c;
+    text-align: center;
+    line-height: 25px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 主体内容 */

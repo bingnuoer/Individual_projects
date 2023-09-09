@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>走马灯</title>
+</head>
+<body>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+            li {
+                list-style: none;
+            }
+            .box {
+                margin: 100px auto;
+                width: 600px;
+                height: 112px;
+                border: 5px solid #000;
+                /* 超出盒子区域 内容隐藏 */
+                overflow: hidden;
+            }
+            img {
+                width: 200px;
+            }
+            .box li {
+                float: left;
+            }
+            /* 动画里面ul>li图片，都控制ul，方便！ */
+            /* 多个图片并排，超过盒子尺寸，给ul扩大尺寸为所有图片(7张)的宽和 */
+            /* “无缝动画”：显示区域能放下3张图片，就给要展示的一组图片(7张)后面再重复加3张图片，保证一组图片移动完后显示区域不留白。给ul扩大尺寸为10张（7+3）图片的宽和 */
+            /* ul使用动画，给ul添加动画 */
+            .box ul {
+                width: 2000px;
+                animation: move 8s infinite linear;
+            }
+            /* 位移实现一组图片向左滑动，控制ul,而不是li/a */
+            @keyframes move {
+                to{
+                    transform: translateX(-1400px);
+                }
+            }
+            /* 鼠标控制box中的ul,鼠标悬停图片动画暂停 */
+            .box:hover ul {
+                animation-play-state: paused;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="box">
+            <ul>
+                <li><img src="./images/1.jpg" alt=""></li>
+                <li><img src="./images/2.jpg" alt=""></li>
+                <li><img src="./images/3.jpg" alt=""></li>
+                <li><img src="./images/4.jpg" alt=""></li>
+                <li><img src="./images/5.jpg" alt=""></li>
+                <li><img src="./images/6.jpg" alt=""></li>
+                <li><img src="./images/7.jpg" alt=""></li>
+              <!-- “无缝动画”：显示区域能放下3张图片，就给要展示的一组图片(7张)后面再重复加3张图片，保证一组图片移动完后显示区域不留白。 -->
+                <li><img src="./images/1.jpg" alt=""></li>
+                <li><img src="./images/2.jpg" alt=""></li>
+                <li><img src="./images/3.jpg" alt=""></li>
+            </ul>
+        </div>
+    </body>
+    </html>
+</body>
+</html>

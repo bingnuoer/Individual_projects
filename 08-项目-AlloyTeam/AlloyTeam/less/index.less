@@ -1,0 +1,74 @@
+// 控制网页的移动适配
+// 版心
+.carousel {
+    //如果视口<768, 图250 max -width
+    //如果视口<992，图400 max -width
+    //如果视口>992,图500 min -width
+    // 层叠掉图片“height:auto”的属性，这样图片的高才能移动适配变化
+    img {
+        height: 100%!important;
+    }
+    @media (max-width:992px) {
+        // 控制图片的尺寸，可以直接控制图片的父级
+        .item {
+            height: 400px;
+        }
+    }
+    @media (max-width:768px) {
+        .item {
+            height: 250px;
+        }
+    }
+    @media (min-width:992px) {
+        .item {
+            height: 500px;
+        }
+    }
+    
+}
+
+// 头部
+.navbar {
+    // 透明背景
+    background-color: transparent;
+    // 去掉边框，同时也就去掉边框颜色
+    border: 0;
+
+    .container {
+        .collapse {
+            a {
+                font-size: 16px;
+                color: #fff;
+            
+                // :hover {
+                //     color: orange;
+                // }
+            }
+        }
+    }
+
+    
+}
+
+// 开源项目
+.project {
+    padding-top: 30px;
+    text-align: center;
+    .container {
+        a {
+            display: block;
+            height: 200px;
+            img {
+                height: 100%;
+            }
+        }
+    }
+
+}
+
+// footer
+.footer {
+    margin-top: 30px;
+    height: 200px;
+    background-color: skyblue;
+}

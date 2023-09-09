@@ -1,0 +1,148 @@
+// base.less用index.less导入到index.css中
+@import 'base'; 
+// 变量
+@vw: 3.75vw;
+@color: #fb7299;
+
+a {
+    list-style: none;
+}
+
+// 1.头部 固定
+header {
+    // 固定定位必须有宽
+    position: fixed;
+    left: 0;
+    top: 0;
+    // 头部区域压在视频区域上面
+    z-index: 1;
+    width: 100%;
+    height: (84 / @vw);
+    background-color: #fff;
+
+    // top
+    .top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        height: (44 / 3.75vw);
+        padding-left: (18 / @vw);
+        padding-right: (12 / @vw);
+
+        .left {
+            // 用iconfont 防止权重不够，样式不生效
+            .iconfont {
+                 // 临摹网站字号一般设置20多，再调节
+                font-size: (28 / @vw);
+                color: @color;
+            }          
+        }
+
+        .right {
+            // a标签使用df没有间距，浮动有间距
+            display: flex;
+            .iconfont {
+                font-size: (24 / @vw);
+                color: #ccc;
+            }
+            .login {
+                margin-left: (24 / @vw);
+                width: (24 / @vw);
+                height: (24 / @vw);
+            }
+            .download {
+                margin-left: (24 / @vw);
+                width: (72 / @vw);
+                height: (24 / @vw);
+
+            }
+        }
+    } 
+
+    // bottom
+    .bottom {
+        display: flex;
+        justify-content: space-between;
+        height: (40 / @vw);
+        border-bottom: 1px solid #eee;
+
+        .tab {
+            ul {
+                display: flex;
+                li {
+                    padding: 0 (16 / @vw);
+                    line-height: (40 / @vw);
+                    a {
+                        display: inline-block;
+                        height: (38 / @vw);
+                        font-size: (14 / @vw);
+                        // 当前页面样式
+                        &.current {
+                            // 加底边内边距或者给a加高（注意转显示模式）
+                            // padding-bottom: (8 / @vw);
+                            color: @color;
+                            border-bottom: 2px solid @color;
+                        }
+                    }
+                }
+            }
+            
+        }
+
+        .more {
+            li {
+                width: (40 / @vw);
+                height: (40 / @vw);
+                text-align: center;
+                line-height: (40 / @vw);
+                font-size: (20 / @vw);
+                color: #aaa
+            }
+        }
+    }
+}
+
+// 2.视频区域布局
+.video_content {
+    padding: (84 / @vw) (5 / @vw) 0;
+
+    .video_list {
+        // 让a的宽生效
+        display: flex;
+        // 找弹性盒子a的父级添加fw换行
+        flex-wrap: wrap;
+        a {
+            width: 50%;
+            padding:(8 / @vw) (5 / @vw);
+            font-size: (12 / @vw);
+
+            .pic {
+                position: relative;
+                .count {
+                    position: absolute;
+                        left: 0;
+                        bottom: 0;
+                        display: flex;
+                        justify-content: space-between;
+                        // 加宽 jc才生效
+                        width: 100%;
+                        padding: (8 / @vw);
+                        // 渐变背景
+                        background-image: linear-gradient(0deg,rgba(0,0,0,.85),transparent);
+                        color: #fff;
+                    
+                    p {
+                        
+                    }
+                }
+            }
+
+            .txt {
+                margin-top: (5 / @vw);
+            }
+        }
+        
+    }
+}
+
