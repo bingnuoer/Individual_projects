@@ -42,8 +42,9 @@
 </template>
 
 <script>
-// 导入axios工具
-import request from '@/utils/request'
+// 按需导入axios请求接口方法
+// 全局方法
+import { getPicCode } from '@/api/login'
 
 export default {
   // 多个单词命名
@@ -58,12 +59,13 @@ export default {
   // 测试接口,在created中发送请求
   created () {
     // 获取图形验证码 方法封装起来
+    // 带 this 是局部方法
     this.getPicCode()
   },
   methods: {
     // 获取图形验证码
     async getPicCode () {
-      const { data: { base64, key } } = await request.get('/captcha/image')
+      const { data: { base64, key } } = await getPicCode()
       this.picUrl = base64 // 图形验证码
       this.picKey = key // 唯一标识
     }
