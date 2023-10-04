@@ -41,9 +41,17 @@
 </template>
 
 <script>
+// 导入axios工具
+import request from '@/utils/request'
+
 export default {
   // 多个单词命名
-  name: 'LoginIndex'
+  name: 'LoginIndex',
+  // 测试接口,在created中发送请求
+  async created () {
+    const res = await request.get('/captcha/image')
+    console.log(res)
+  }
 }
 </script>
 
