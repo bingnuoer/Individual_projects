@@ -22,12 +22,13 @@
         </div>
         <div class="form-item">
           <input
+            v-model="picCode"
             class="inp"
             maxlength="5"
             placeholder="请输入图形验证码"
             type="text"
           />
-          <img src="@/assets/code.png" alt="" />
+          <img v-if="picUrl" :src="picUrl" @click="getPicCode" alt="" />
         </div>
         <div class="form-item">
           <input class="inp" placeholder="请输入短信验证码" type="text" />
@@ -47,10 +48,25 @@ import request from '@/utils/request'
 export default {
   // 多个单词命名
   name: 'LoginIndex',
+  data () {
+    return {
+      picCode: '', // 用户输入的图形验证码
+      picKey: '', // 将来请求传递的图形验证码唯一标识
+      picUrl: '' // 存储请求渲染的图片地址
+    }
+  },
   // 测试接口,在created中发送请求
-  async created () {
-    const res = await request.get('/captcha/image')
-    console.log(res)
+  created () {
+    // 获取图形验证码 方法封装起来
+    this.getPicCode()
+  },
+  methods: {
+    // 获取图形验证码
+    async getPicCode () {
+      const { data: { base64, key } } = await request.get('/captcha/image')
+      this.picUrl = base64 // 图形验证码
+      this.picKey = key // 唯一标识
+    }
   }
 }
 </script>
