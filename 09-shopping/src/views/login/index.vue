@@ -32,7 +32,7 @@
           <img v-if="picUrl" :src="picUrl" @click="getPicCode" alt="" />
         </div>
         <div class="form-item">
-          <input class="inp" placeholder="请输入短信验证码" type="text" />
+          <input v-model="msgCode" class="inp" placeholder="请输入短信验证码" type="text" />
           <button @click="getCode">
             {{
               totalSecond === second
@@ -43,7 +43,7 @@
         </div>
       </div>
 
-      <div class="login-btn">登录</div>
+      <div @click="login" class="login-btn">登录</div>
     </div>
   </div>
 </template>
@@ -51,7 +51,7 @@
 <script>
 // 按需导入axios请求接口方法
 // 全局方法
-import { getPicCode, getMsgCode } from '@/api/login'
+import { getPicCode, getMsgCode, codeLogin } from '@/api/login'
 // import { Toast } from 'vant'
 
 export default {
@@ -65,7 +65,8 @@ export default {
       second: 60, // 当前秒数
       timer: null, // 定时器id,方便开关定时器
       mobile: '', // 手机号
-      picCode: '' // 用户输入的图形验证码
+      picCode: '', // 用户输入的图形验证码
+      msgCode: '' // 短信验证码
     }
   },
   // 测试接口,在created中发送请求
@@ -131,6 +132,22 @@ export default {
           }
         }, 1000)
       }
+    },
+
+    // 短信验证码登录功能
+    async login () {
+      // 校验 手机号 和 图形验证码 是否合法
+      if (!this.vaildFn()) {
+        return
+      }
+      // 校验短信验证码
+      if (!/^\d{6}$/.test(this.msgCode)) {
+        this.$toast('请输入正确的短信验证码')
+      }
+      await codeLogin(this.mobile, this.msgCode)
+      // 跳转到首页
+      this.$router.push('/')
+      this.$toast('登录成功')
     }
   },
   // 修改bug:离开页面，关闭定时器
