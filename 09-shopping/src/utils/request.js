@@ -37,9 +37,12 @@ instance.interceptors.response.use(function (response) {
     Toast(res.message)
     // 抛出一个错误的promise
     return Promise.reject(res.message)
+<<<<<<< HEAD
   } else {
     // 清除 loading 中的效果
     Toast.clear()
+=======
+>>>>>>> b7469909d10addc3d9ee7160ba962339dae2fa24
   }
   return res
 }, function (error) {
