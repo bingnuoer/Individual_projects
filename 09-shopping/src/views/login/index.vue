@@ -145,7 +145,10 @@ export default {
       if (!/^\d{6}$/.test(this.msgCode)) {
         this.$toast('请输入正确的短信验证码')
       }
-      await codeLogin(this.mobile, this.msgCode)
+      const res = await codeLogin(this.mobile, this.msgCode)
+      // console.log(res)
+      // 请求的res携带回来的data信息存到仓库中
+      this.$store.commit('user/setUserInfo', res.data)
       // 跳转到首页
       this.$router.push('/')
       this.$toast('登录成功')
