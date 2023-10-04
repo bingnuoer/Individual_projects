@@ -14,6 +14,7 @@
       <div class="form">
         <div class="form-item">
           <input
+          v-model="mobile"
             class="inp"
             maxlength="11"
             placeholder="请输入手机号码"
@@ -32,7 +33,13 @@
         </div>
         <div class="form-item">
           <input class="inp" placeholder="请输入短信验证码" type="text" />
-          <button>获取验证码</button>
+          <button @click="getCode">
+            {{
+              totalSecond === second
+                ? "获取验证码"
+                : second + "秒后再获取验证码"
+            }}
+          </button>
         </div>
       </div>
 
@@ -44,7 +51,7 @@
 <script>
 // 按需导入axios请求接口方法
 // 全局方法
-import { getPicCode } from '@/api/login'
+import { getPicCode, getMsgCode } from '@/api/login'
 // import { Toast } from 'vant'
 
 export default {
@@ -52,9 +59,13 @@ export default {
   name: 'LoginIndex',
   data () {
     return {
-      picCode: '', // 用户输入的图形验证码
       picKey: '', // 将来请求传递的图形验证码唯一标识
-      picUrl: '' // 存储请求渲染的图片地址
+      picUrl: '', // 存储请求渲染的图片地址
+      totalSecond: 60, // 总秒数
+      second: 60, // 当前秒数
+      timer: null, // 定时器id,方便开关定时器
+      mobile: '', // 手机号
+      picCode: '' // 用户输入的图形验证码
     }
   },
   // 测试接口,在created中发送请求
@@ -66,22 +77,70 @@ export default {
   methods: {
     // 获取图形验证码
     async getPicCode () {
-      const { data: { base64, key } } = await getPicCode()
+      const {
+        data: { base64, key }
+      } = await getPicCode()
       this.picUrl = base64 // 图形验证码
       this.picKey = key // 唯一标识
 
       // Toast('验证码获取成功')
       // this.$toast('验证码获取成功')
-      this.$toast.loading({
-        message: '加载中...',
-        forbidClick: true
-      })
+      // this.$toast.loading({
+      //   message: '加载中...',
+      //   forbidClick: true
+      // })
+    },
+
+    // 校验 手机号 和 图形验证码 是否合法
+    vaildFn () {
+      if (!/^1[3-9]\d{9}$/.test(this.mobile)) {
+        this.$toast('请输入正确的手机号')
+        return false
+      }
+      if (!/^\w{4}$/.test(this.picCode)) {
+        this.$toast('请输入正确的图形验证码')
+        return false
+      }
+      return true
+    },
+
+    // 获取短信验证码
+    async getCode () {
+      // 请求倒计时前进行校验
+      if (!this.vaildFn()) {
+        // 没必要往下走了
+        return
+      }
+      // 当没有开定时器，且总秒数=当前秒数时，才开定时器
+      if (!this.timer && this.second === this.totalSecond) {
+        // 发送请求 获取验证码
+        await getMsgCode(this.picCode, this.picKey, this.mobile)
+        // console.log(res)
+        this.$toast('发送成功,请注意查收')
+
+        // 开启倒计时
+        this.timer = setInterval(() => {
+          // console.log('开始倒计时')
+          this.second--
+
+          if (this.second <= 0) {
+            // 清空定时器
+            clearInterval(this.timer)
+            this.timer = null // 重置
+            this.second = this.totalSecond // 归位
+          }
+        }, 1000)
+      }
     }
+  },
+  // 修改bug:离开页面，关闭定时器
+  destroyed () {
+    clearInterval(this.timer)
   }
 }
 </script>
 
-<style>
+<style lang="less" scoped>
 .container {
   padding: 49px 29px;
 
