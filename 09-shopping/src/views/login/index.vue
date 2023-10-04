@@ -115,6 +115,7 @@ export default {
       // 当没有开定时器，且总秒数=当前秒数时，才开定时器
       if (!this.timer && this.second === this.totalSecond) {
         // 发送请求 获取验证码
+        // 预期：希望如果响应的status非200,最好抛出一个promise错误，await只会等待成功的promise
         await getMsgCode(this.picCode, this.picKey, this.mobile)
         // console.log(res)
         this.$toast('发送成功,请注意查收')
