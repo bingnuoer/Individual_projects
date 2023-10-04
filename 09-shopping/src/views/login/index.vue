@@ -45,6 +45,7 @@
 // 按需导入axios请求接口方法
 // 全局方法
 import { getPicCode } from '@/api/login'
+// import { Toast } from 'vant'
 
 export default {
   // 多个单词命名
@@ -68,6 +69,13 @@ export default {
       const { data: { base64, key } } = await getPicCode()
       this.picUrl = base64 // 图形验证码
       this.picKey = key // 唯一标识
+
+      // Toast('验证码获取成功')
+      // this.$toast('验证码获取成功')
+      this.$toast.loading({
+        message: '加载中...',
+        forbidClick: true
+      })
     }
   }
 }
