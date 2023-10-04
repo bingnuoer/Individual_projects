@@ -6,14 +6,13 @@ import user from '@/store/modules/user'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {
-  },
   getters: {
+    // 配置全局的属性 一个方法
+    token (state) {
+      return state.user.userInfo.token
+    }
   },
-  mutations: {
-  },
-  actions: {
-  },
+
   modules: {
     // 导入仓库子模块
     user
