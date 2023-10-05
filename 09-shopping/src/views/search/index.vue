@@ -23,15 +23,18 @@
 </template>
 
 <script>
+import { getHistoryList, setHistoryList } from '@/utils/storage'
 export default {
   name: 'SearchIndex',
   data () {
     return {
-      history: [
-        '手机',
-        '白酒',
-        '电视'
-      ],
+      // history: [
+      //   '手机',
+      //   '白酒',
+      //   '电视'
+      // ],
+      // 获取搜索历史
+      history: getHistoryList(),
       search: '' // 搜索框值
     }
   },
@@ -49,9 +52,14 @@ export default {
       }
       // 追加到数组最前面
       this.history.unshift(key)
+      // 设置搜索历史
+      setHistoryList(this.history)
+      // 跳转到搜索商品详情页,携带参数
+      this.$router.push(`/searchlist/search=${key}`)
     },
     clear () {
       this.history = []
+      setHistoryList([])
     }
   }
 }
