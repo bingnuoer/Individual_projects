@@ -55,7 +55,7 @@ export default {
       // 设置搜索历史
       setHistoryList(this.history)
       // 跳转到搜索商品详情页,携带参数
-      this.$router.push(`/searchlist/search=${key}`)
+      this.$router.push(`/searchlist?search=${key}`)
     },
     clear () {
       this.history = []
