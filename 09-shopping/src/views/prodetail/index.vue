@@ -91,9 +91,47 @@
         <van-icon name="shopping-cart-o" />
         <span>购物车</span>
       </div>
-      <div class="btn-add">加入购物车</div>
-      <div class="btn-buy">立刻购买</div>
+      <div @click="addFn" class="btn-add">加入购物车</div>
+      <div @click="buyFn" class="btn-buy">立刻购买</div>
     </div>
+
+    <!-- 弹层 -->
+    <van-action-sheet
+      v-model="showPannel"
+      :title="mode === 'cart' ? '加入购物车' : '立刻购买'"
+    >
+      <div class="product">
+        <div class="product-title">
+          <div class="left">
+            <img
+              :src="detail.goods_image"
+              alt=""
+            />
+          </div>
+          <div class="right">
+            <div class="price">
+              <span>¥</span>
+              <span class="nowprice">{{ detail.goods_price_min
+ }}</span>
+            </div>
+            <div class="count">
+              <span>库存</span>
+              <span>{{ detail.stock_total }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="num-box">
+          <span>数量</span>
+          数字框占位
+        </div>
+        <!-- 库存为>0,才能加购/购买 -->
+        <div class="showbtn" v-if="detail.stock_total>0">
+          <div class="btn" v-if="mode === 'cart'">加入购物车</div>
+          <div class="btn now" v-if="mode === 'buyNow'">立刻购买</div>
+        </div>
+        <div class="btn-none" v-else>该商品已抢完</div>
+      </div>
+    </van-action-sheet>
   </div>
 </template>
 
@@ -109,7 +147,9 @@ export default {
       detail: {}, // 存所有渲染的数据
       total: 0, // 评论总数
       commentList: [], // 评论列表
-      defaultImg // 默认头像
+      defaultImg, // 默认头像
+      showPannel: false, // 展示弹层面板
+      mode: 'cart' // 加购物车 弹层标题
     }
   },
   // 获取动态路由参数
@@ -138,6 +178,7 @@ export default {
       this.detail = detail
       this.images = detail.goods_images
       // console.log(this.images)
+      console.log(await getProDetail(this.goodsId))
     },
     // 获取商品评论的数据
     async getComments () {
@@ -147,6 +188,16 @@ export default {
       } = await getProComments(this.goodsId, 3)
       this.total = total
       this.commentList = list
+    },
+    // 加入购物车
+    addFn () {
+      this.showPannel = true
+      this.mode = 'cart'
+    },
+    // 立刻购买
+    buyFn () {
+      this.showPannel = true
+      this.mode = 'buyNow' // 立刻购买
     }
   }
 }
@@ -298,5 +349,54 @@ export default {
 
 .tips {
   padding: 10px;
+}
+
+.product {
+  .product-title {
+    display: flex;
+    .left {
+      img {
+        width: 90px;
+        height: 90px;
+      }
+      margin: 10px;
+    }
+    .right {
+      flex: 1;
+      padding: 10px;
+      .price {
+        font-size: 14px;
+        color: #fe560a;
+        .nowprice {
+          font-size: 24px;
+          margin: 0 5px;
+        }
+      }
+    }
+  }
+
+  .num-box {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    align-items: center;
+  }
+
+  .btn,
+  .btn-none {
+    height: 40px;
+    line-height: 40px;
+    margin: 20px;
+    border-radius: 20px;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    background-color: rgb(255, 148, 2);
+  }
+  .btn.now {
+    background-color: #fe5630;
+  }
+  .btn-none {
+    background-color: #cccccc;
+  }
 }
 </style>
