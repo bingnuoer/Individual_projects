@@ -7,3 +7,8 @@ export const addCart = (goodsId, goodsNum, goodsSkuId) => {
     goodsSkuId // 商品SKUID 商品的一些属性：颜色/尺寸
   })
 }
+
+// 获取购物车列表数据
+export const getCartList = () => {
+  return request.get('/cart/list')
+}

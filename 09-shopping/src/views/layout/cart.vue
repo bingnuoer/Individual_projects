@@ -68,6 +68,16 @@ export default {
   // 注册组件
   components: {
     countBox // 数量小组件
+  },
+  computed: {
+    isLogin () {
+      return this.$store.getters.token
+    }
+  },
+  created () {
+    if (this.isLogin) {
+      this.$store.dispatch('cart/getCartAction')
+    }
   }
 }
 </script>

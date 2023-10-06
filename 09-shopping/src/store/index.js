@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 // 仓库子模块挂载到vuex上
 import user from '@/store/modules/user'
+// 购物车的vuex 仓库子模块挂载到vuex上
+import cart from '@/store/modules/cart'
 
 Vue.use(Vuex)
 
@@ -15,6 +17,7 @@ export default new Vuex.Store({
 
   modules: {
     // 导入仓库子模块
-    user
+    user,
+    cart
   }
 })
