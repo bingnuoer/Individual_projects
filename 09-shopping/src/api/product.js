@@ -22,3 +22,13 @@ export const getProDetail = (goodsId) => {
     }
   })
 }
+
+// 获取商品评论的接口
+export const getProComments = (goodsId, limit) => {
+  return request.get('/comment/listRows', {
+    params: {
+      goodsId, // 商品id
+      limit // 获取评论数量
+    }
+  })
+}

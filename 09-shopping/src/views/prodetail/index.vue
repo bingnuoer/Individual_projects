@@ -1,16 +1,22 @@
 <template>
   <div class="prodetail">
-    <van-nav-bar fixed title="商品详情页" left-arrow @click-left="$router.go(-1)" />
+    <van-nav-bar
+      fixed
+      title="商品详情页"
+      left-arrow
+      @click-left="$router.go(-1)"
+    />
 
     <van-swipe :autoplay="3000" @change="onChange">
       <van-swipe-item v-for="(image, index) in images" :key="index">
-        <img :src="image.external_url
-" />
+        <img :src="image.external_url" />
       </van-swipe-item>
 
       <template #indicator>
         <!-- 轮播图当前第几页 -->
-        <div class="custom-indicator">{{ current + 1 }} / {{ images.length }}</div>
+        <div class="custom-indicator">
+          {{ current + 1 }} / {{ images.length }}
+        </div>
       </template>
     </van-swipe>
 
@@ -41,21 +47,31 @@
     <!-- 商品评价 -->
     <div class="comment">
       <div class="comment-title">
-        <div class="left">商品评价 (5条)</div>
-        <div class="right">查看更多 <van-icon name="arrow" /> </div>
+        <div class="left">商品评价 ({{ total }}条)</div>
+        <div class="right">查看更多 <van-icon name="arrow" /></div>
       </div>
       <div class="comment-list">
-        <div class="comment-item" v-for="item in 3" :key="item">
+        <div
+          class="comment-item"
+          v-for="item in commentList"
+          :key="item.commit_id"
+        >
           <div class="top">
-            <img src="http://cba.itlike.com/public/uploads/10001/20230321/a0db9adb2e666a65bc8dd133fbed7834.png" alt="">
-            <div class="name">神雕大侠</div>
-            <van-rate :size="16" :value="5" color="#ffd21e" void-icon="star" void-color="#eee"/>
+            <img :src="item.user.avatar_url || defaultImg" alt="" />
+            <div class="name">{{ item.user.nick_name }}</div>
+            <van-rate
+              :size="16"
+              :value="item.score / 2"
+              color="#ffd21e"
+              void-icon="star"
+              void-color="#eee"
+            />
           </div>
           <div class="content">
-            质量很不错 挺喜欢的
+            {{ item.content }}
           </div>
           <div class="time">
-            2023-03-21 15:01:35
+            {{ item.create_time }}
           </div>
         </div>
       </div>
@@ -63,8 +79,7 @@
 
     <!-- 商品描述 -->
     <!-- detail.content是个标签，要用v-html解析 -->
-    <div class="desc" v-html="detail.content">
-    </div>
+    <div class="desc" v-html="detail.content"></div>
 
     <!-- 底部 -->
     <div class="footer">
@@ -83,14 +98,18 @@
 </template>
 
 <script>
-import { getProDetail } from '@/api/product'
+import { getProDetail, getProComments } from '@/api/product'
+import defaultImg from '@/assets/default-avatar.png'
 export default {
   name: 'ProDetail',
   data () {
     return {
       images: [],
       current: 0,
-      detail: {} // 存所有渲染的数据
+      detail: {}, // 存所有渲染的数据
+      total: 0, // 评论总数
+      commentList: [], // 评论列表
+      defaultImg // 默认头像
     }
   },
   // 获取动态路由参数
@@ -100,8 +119,11 @@ export default {
     }
   },
   created () {
+    // 封装方法
     // 获取所有渲染的数据
     this.getdetail()
+    // 获取商品评论的数据
+    this.getComments()
   },
   methods: {
     // 轮播图
@@ -110,10 +132,21 @@ export default {
     },
     // 获取所有渲染的数据
     async getdetail () {
-      const { data: { detail } } = await getProDetail(this.goodsId)
+      const {
+        data: { detail }
+      } = await getProDetail(this.goodsId)
       this.detail = detail
       this.images = detail.goods_images
-      console.log(this.images)
+      // console.log(this.images)
+    },
+    // 获取商品评论的数据
+    async getComments () {
+      // 解构出想要的数据
+      const {
+        data: { list, total }
+      } = await getProComments(this.goodsId, 3)
+      this.total = total
+      this.commentList = list
     }
   }
 }
@@ -143,7 +176,7 @@ export default {
     overflow: scroll;
     ::v-deep img {
       display: block;
-      width: 100%!important;
+      width: 100% !important;
     }
   }
   .info {
@@ -235,7 +268,8 @@ export default {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    .icon-home, .icon-cart {
+    .icon-home,
+    .icon-cart {
       display: flex;
       flex-direction: column;
       align-items: center;
