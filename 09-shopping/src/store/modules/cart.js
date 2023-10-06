@@ -43,7 +43,7 @@ export default {
     selPrice (state, getters) {
       return getters.selCartList.reduce((sum, item) => {
         return sum + item.goods_num * item.goods.goods_price_min
-      }, 0)
+      }, 0).toFixed(2)
     }
   }
 }
