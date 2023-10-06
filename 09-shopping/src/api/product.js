@@ -12,3 +12,13 @@ export const getProList = (obj) => {
     }
   })
 }
+
+// 获取商品详情的接口
+// post请求 第二个直接写参数，get请求写params
+export const getProDetail = (goodsId) => {
+  return request.get('/goods/detail', {
+    params: {
+      goodsId
+    }
+  })
+}
