@@ -1,6 +1,7 @@
 import Vue from 'vue'
 // 按需导入组件（推荐） —— 封装到一个专门的组件文件中：utils/vant-ui.js
-import { Dialog, ActionSheet, Icon, Search, Swipe, SwipeItem, Grid, GridItem, Toast, Button, Switch, Rate, Tabbar, TabbarItem, NavBar } from 'vant'
+import { Checkbox, Dialog, ActionSheet, Icon, Search, Swipe, SwipeItem, Grid, GridItem, Toast, Button, Switch, Rate, Tabbar, TabbarItem, NavBar } from 'vant'
+Vue.use(Checkbox)
 Vue.use(Dialog)
 Vue.use(ActionSheet)
 Vue.use(Icon)
