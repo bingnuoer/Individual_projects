@@ -25,5 +25,25 @@ export default {
     }
 
   },
-  getters: {}
+  getters: {
+    // 封装 计算属性：商品总数  / 选中的商品列表  /   选中的商品总数  /   选中的商品总价
+    // 商品总数
+    cartTotal (state) {
+      return state.cartList.reduce((sum, item) => sum + item.goods_num, 0)
+    },
+    // 选中的商品列表
+    selCartList (state) {
+      return state.cartList.filter(item => item.isChecked)
+    },
+    // 选中的商品总数
+    selCount (state, getters) {
+      return getters.selCartList.reduce((sum, item) => sum + item.goods_num, 0)
+    },
+    // 选中的商品总价
+    selPrice (state, getters) {
+      return getters.selCartList.reduce((sum, item) => {
+        return sum + item.goods_num * item.goods.goods_price_min
+      }, 0)
+    }
+  }
 }

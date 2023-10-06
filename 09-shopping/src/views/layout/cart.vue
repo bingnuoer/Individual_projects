@@ -3,7 +3,7 @@
     <van-nav-bar title="购物车" fixed />
     <!-- 购物车开头 -->
     <div class="cart-title">
-      <span class="all">共<i>4</i>件商品</span>
+      <span class="all">共<i>{{ cartTotal || 0}}</i>件商品</span>
       <span class="edit">
         <van-icon name="edit" />
         编辑
@@ -48,9 +48,9 @@
       <div class="all-total">
         <div class="price">
           <span>合计：</span>
-          <span>¥ <i class="totalPrice">99.99</i></span>
+          <span>¥ <i class="totalPrice">{{ selPrice }}</i></span>
         </div>
-        <div v-if="true" class="goPay">结算(5)</div>
+        <div v-if="true" class="goPay">结算({{ selCount }})</div>
         <div v-else class="delete">删除</div>
       </div>
     </div>
@@ -62,7 +62,7 @@
 // 导入组件
 import countBox from '@/components/countBox.vue'
 // 将数据映射到页面
-import { mapState } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 export default {
   name: 'CartPage',
   // 注册组件
@@ -73,7 +73,8 @@ export default {
     isLogin () {
       return this.$store.getters.token
     },
-    ...mapState('cart', ['cartList'])
+    ...mapState('cart', ['cartList']),
+    ...mapGetters('cart', ['cartTotal', 'selCount', 'selPrice'])
   },
   created () {
     if (this.isLogin) {
