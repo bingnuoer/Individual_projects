@@ -12,22 +12,20 @@
 
     <!-- 购物车列表 -->
     <div class="cart-list">
-      <div class="cart-item" v-for="item in 10" :key="item">
-        <van-checkbox></van-checkbox>
+      <div class="cart-item" v-for="item in cartList" :key="item.goods_id">
+        <van-checkbox :value="item.isChecked"></van-checkbox>
         <div class="show">
           <img
-            src="http://cba.itlike.com/public/uploads/10001/20230321/a072ef0eef1648a5c4eae81fad1b7583.jpg"
+            :src="item.goods.goods_image"
             alt=""
           />
         </div>
         <div class="info">
           <span class="tit text-ellipsis-2"
-            >新Pad 14英寸 12+128 远峰蓝 M6平板电脑
-            智能安卓娱乐十核游戏学习二合一
-            低蓝光护眼超清4K全面三星屏5GWIFI全网通 蓝魔快本平板</span
+            >{{ item.goods.goods_name }}</span
           >
           <span class="bottom">
-            <div class="price">¥ <span>1247.04</span></div>
+            <div class="price">¥ <span>{{ item.goods.goods_price_min }}</span></div>
             <!-- 数量组件 -->
             <!-- <div class="count-box">
               <button class="minus">-</button>
@@ -63,6 +61,8 @@
 // 使用组件：3步
 // 导入组件
 import countBox from '@/components/countBox.vue'
+// 将数据映射到页面
+import { mapState } from 'vuex'
 export default {
   name: 'CartPage',
   // 注册组件
@@ -72,7 +72,8 @@ export default {
   computed: {
     isLogin () {
       return this.$store.getters.token
-    }
+    },
+    ...mapState('cart', ['cartList'])
   },
   created () {
     if (this.isLogin) {
