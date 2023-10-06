@@ -122,7 +122,8 @@
         </div>
         <div class="num-box">
           <span>数量</span>
-          数字框占位
+          <!-- v-model绑定组件：父传子“:value”;子传父：“@input” -->
+          <countBox v-model="addCount"></countBox>
         </div>
         <!-- 库存为>0,才能加购/购买 -->
         <div class="showbtn" v-if="detail.stock_total>0">
@@ -138,6 +139,7 @@
 <script>
 import { getProDetail, getProComments } from '@/api/product'
 import defaultImg from '@/assets/default-avatar.png'
+import countBox from '@/components/countBox.vue'
 export default {
   name: 'ProDetail',
   data () {
@@ -149,8 +151,13 @@ export default {
       commentList: [], // 评论列表
       defaultImg, // 默认头像
       showPannel: false, // 展示弹层面板
-      mode: 'cart' // 加购物车 弹层标题
+      mode: 'cart', // 加购物车 弹层标题
+      addCount: 1 // 数量框绑定的数据
     }
+  },
+  // 组件
+  components: {
+    countBox
   },
   // 获取动态路由参数
   computed: {
