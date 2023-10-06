@@ -1,3 +1,4 @@
+import store from '@/store'
 import axios from 'axios'
 import { Toast } from 'vant'
 // 创建 axios 实例，将来对创建出来的实例，进行自定义配置
@@ -22,7 +23,13 @@ instance.interceptors.request.use(function (config) {
   })
 
   // 对于 购物车/购买/支付 携带token
-  // const token =
+  const token = store.getters.token
+  // token存在——配置购物车请求携带的 2个全局参数，才对这些功能操作
+  if (token) {
+    // Access-Token 带非法字符，用 [''] 转义
+    config.headers['Access-Token'] = token
+    config.headers.platform = 'H5'
+  }
   return config
 }, function (error) {
   // 对请求错误做些什么
