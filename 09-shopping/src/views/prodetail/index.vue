@@ -138,6 +138,7 @@
 import { getProDetail, getProComments } from '@/api/product'
 import defaultImg from '@/assets/default-avatar.png'
 import countBox from '@/components/countBox.vue'
+import { addCart } from '@/api/cart'
 export default {
   name: 'ProDetail',
   data () {
@@ -150,7 +151,8 @@ export default {
       defaultImg, // 默认头像
       showPannel: false, // 展示弹层面板
       mode: 'cart', // 加购物车 弹层标题
-      addCount: 1 // 数量框绑定的数据
+      addCount: 1, // 数量框绑定的数据
+      cartTotal: 0 // 购物车商品数量
     }
   },
   // 组件
@@ -205,7 +207,7 @@ export default {
       this.mode = 'buyNow' // 立刻购买
     },
     // 点击加入购物车按钮 触发事件
-    addCart () {
+    async addCart () {
       // 判断 token 是否存在
       // 1.token不存在，弹出弹框
       if (!this.$store.getters.token) {
@@ -236,7 +238,12 @@ export default {
           })
         return
       }
-      // 2.token存在，正常请求
+      // 2.token存在，正常请求_调用加入购物车接口
+      const { data } = await addCart(this.goodsId, this.addCount, this.detail.skuList[0].goods_sku_id)
+      this.cartTotal = data.cartTotal
+      this.$toast('加入购物车成功')
+      this.showPannel = false // 关闭弹窗
+
       console.log('正常请求')
     }
   }

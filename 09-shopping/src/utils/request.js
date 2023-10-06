@@ -20,6 +20,9 @@ instance.interceptors.request.use(function (config) {
     loadingType: 'spinner', // 加载loading图标
     duration: 0 // 展示时长(ms)，值为 0 时，toast 不会消失
   })
+
+  // 对于 购物车/购买/支付 携带token
+  // const token =
   return config
 }, function (error) {
   // 对请求错误做些什么
