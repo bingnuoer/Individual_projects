@@ -150,7 +150,9 @@ export default {
       // 请求的res携带回来的data信息存到仓库中
       this.$store.commit('user/setUserInfo', res.data)
       // 跳转到首页
-      this.$router.push('/')
+      // 判断有无跳回地址 查询参数 query ,回跳的地址 backUrl
+      const url = this.$route.query.backUrl || '/'
+      this.$router.replace(url)
       this.$toast('登录成功')
     }
   },

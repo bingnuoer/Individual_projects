@@ -103,16 +103,12 @@
       <div class="product">
         <div class="product-title">
           <div class="left">
-            <img
-              :src="detail.goods_image"
-              alt=""
-            />
+            <img :src="detail.goods_image" alt="" />
           </div>
           <div class="right">
             <div class="price">
               <span>¥</span>
-              <span class="nowprice">{{ detail.goods_price_min
- }}</span>
+              <span class="nowprice">{{ detail.goods_price_min }}</span>
             </div>
             <div class="count">
               <span>库存</span>
@@ -126,8 +122,10 @@
           <countBox v-model="addCount"></countBox>
         </div>
         <!-- 库存为>0,才能加购/购买 -->
-        <div class="showbtn" v-if="detail.stock_total>0">
-          <div class="btn" v-if="mode === 'cart'">加入购物车</div>
+        <div class="showbtn" v-if="detail.stock_total > 0">
+          <div class="btn" v-if="mode === 'cart'" @click="addCart">
+            加入购物车
+          </div>
           <div class="btn now" v-if="mode === 'buyNow'">立刻购买</div>
         </div>
         <div class="btn-none" v-else>该商品已抢完</div>
@@ -205,6 +203,41 @@ export default {
     buyFn () {
       this.showPannel = true
       this.mode = 'buyNow' // 立刻购买
+    },
+    // 点击加入购物车按钮 触发事件
+    addCart () {
+      // 判断 token 是否存在
+      // 1.token不存在，弹出弹框
+      if (!this.$store.getters.token) {
+        // console.log('弹出弹框')
+        this.$dialog
+          .confirm({
+            title: '温馨提示',
+            message: '此时需要先登录才能继续操作哦',
+            confirmButtonText: '去登录',
+            cancelButtonText: '再逛逛'
+          })
+          .then(() => {
+            // 确认，去登录
+            // this.$router.push('/login')
+            // 回跳效果：登录完直接跳转到当前页
+            // this.$router.fallpush(包含路径参数)
+            // 跳转-替换路径：replace
+            // 跳转-新开一个页面：path
+            this.$router.replace({
+              path: '/login',
+              query: {
+                backUrl: this.$router.fallpath
+              }
+            })
+          })
+          .catch(() => {
+            // 取消
+          })
+        return
+      }
+      // 2.token存在，正常请求
+      console.log('正常请求')
     }
   }
 }
