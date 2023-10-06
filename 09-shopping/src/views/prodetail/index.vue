@@ -88,6 +88,8 @@
         <span>首页</span>
       </div>
       <div class="icon-cart">
+        <!-- 给购物车准备小图标 -->
+        <span v-if="cartTotal > 0" class="num">{{ cartTotal }}</span>
         <van-icon name="shopping-cart-o" />
         <span>购物车</span>
       </div>
@@ -239,7 +241,11 @@ export default {
         return
       }
       // 2.token存在，正常请求_调用加入购物车接口
-      const { data } = await addCart(this.goodsId, this.addCount, this.detail.skuList[0].goods_sku_id)
+      const { data } = await addCart(
+        this.goodsId,
+        this.addCount,
+        this.detail.skuList[0].goods_sku_id
+      )
       this.cartTotal = data.cartTotal
       this.$toast('加入购物车成功')
       this.showPannel = false // 关闭弹窗
@@ -368,11 +374,25 @@ export default {
     align-items: center;
     .icon-home,
     .icon-cart {
+      position: relative;
+      padding: 0 6px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       font-size: 14px;
+      .num {
+        z-index: 999;
+        position: absolute;
+        top: -2px;
+        right: 0;
+        min-width: 16px;
+        padding: 0 4px;
+        color: #fff;
+        text-align: center;
+        background-color: #ee0a24;
+        border-radius: 50%;
+      }
       .van-icon {
         font-size: 24px;
       }
