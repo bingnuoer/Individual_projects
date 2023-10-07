@@ -11,6 +11,12 @@ export default {
     // 提供一个设置 cartList 的 mutation
     setCartList (state, newList) {
       state.cartList = newList
+    },
+    // 购物车小复选框
+    toggleCheck (state, goodsId) {
+      const goods = state.cartList.find(item => item.goods_id === goodsId)
+      // 复选框选中状态取反
+      goods.isChecked = !goods.isChecked
     }
   },
   actions: {
