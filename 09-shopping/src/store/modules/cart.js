@@ -50,6 +50,10 @@ export default {
       return getters.selCartList.reduce((sum, item) => {
         return sum + item.goods_num * item.goods.goods_price_min
       }, 0).toFixed(2)
+    },
+    // 计算属性-购物车选了几个小复选框-控制大复选框状态
+    isAllChecked (state) {
+      return state.cartList.every(item => item.isChecked)
     }
   }
 }
