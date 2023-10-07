@@ -7,7 +7,8 @@
         >共<i>{{ cartTotal || 0 }}</i
         >件商品</span
       >
-      <span class="edit">
+      <!-- 点击“编辑”按钮，编辑值取反 -->
+      <span class="edit" @click="isEdit = !isEdit">
         <van-icon name="edit" />
         编辑
       </span>
@@ -59,7 +60,8 @@
             >¥ <i class="totalPrice">{{ selPrice }}</i></span
           >
         </div>
-        <div v-if="true" class="goPay" :class="{ disabled: selCount === 0 }">
+        <!-- "编辑"状态是删除，非编辑状态是结算 -->
+        <div v-if="!isEdit" class="goPay" :class="{ disabled: selCount === 0 }">
           结算({{ selCount }})
         </div>
         <div v-else class="delete" :class="{ disabled: selCount === 0 }">
@@ -78,6 +80,12 @@ import CountBox from '@/components/countBox.vue'
 import { mapGetters, mapState } from 'vuex'
 export default {
   name: 'CartPage',
+  data () {
+    return {
+      // "编辑"按钮状态 布尔值
+      isEdit: false
+    }
+  },
   // 注册组件
   components: {
     CountBox // 数量小组件
