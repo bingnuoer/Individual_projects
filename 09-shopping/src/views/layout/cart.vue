@@ -64,7 +64,7 @@
         <div v-if="!isEdit" class="goPay" :class="{ disabled: selCount === 0 }">
           结算({{ selCount }})
         </div>
-        <div v-else class="delete" :class="{ disabled: selCount === 0 }">
+        <div v-else @click="handleDel" class="delete" :class="{ disabled: selCount === 0 }">
           删除
         </div>
       </div>
@@ -120,15 +120,22 @@ export default {
         goodsId,
         skuId
       })
+    },
+    async handleDel () {
+      if (this.selCount === 0) return
+      // 调用接口
+      await this.$store.dispatch('cart/delSelect')
+      this.isEdit = false
     }
   },
   watch: {
     // 监视 “编辑”状态，设置两种状态下的小复选框
     isEdit (value) {
-      // 编辑状态，所有小复选框不选中
+      // 删除状态，所有小复选框不选中
       if (value) {
         this.$store.commit('cart/toggleAllCheck', false)
       } else {
+        // 结算状态，所有小复选框选中
         this.$store.commit('cart/toggleAllCheck', true)
       }
     }

@@ -1,4 +1,5 @@
-import { changeCount, getCartList } from '@/api/cart'
+import { changeCount, delSelect, getCartList } from '@/api/cart'
+import { Toast } from 'vant'
 // 构建 购物车的vuex
 export default {
   namespaced: true,
@@ -52,6 +53,20 @@ export default {
       })
       // 再同步到后台
       await changeCount(goodsId, value, skuId)
+    },
+
+    // 删除购物车里的数据
+    async delSelect (context) {
+      // 已选择的商品项
+      const selCartList = context.getters.selCartList
+      // 选择所有选择的项
+      const cartIds = selCartList.map(item => item.id)
+      // console.log(cartIds)
+      await delSelect(cartIds)
+      Toast('删除成功')
+
+      // 重新拉取最新的购物车数据
+      context.dispatch('getCartAction')
     }
 
   },
