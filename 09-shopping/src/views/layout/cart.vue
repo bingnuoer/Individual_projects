@@ -121,6 +121,17 @@ export default {
         skuId
       })
     }
+  },
+  watch: {
+    // 监视 “编辑”状态，设置两种状态下的小复选框
+    isEdit (value) {
+      // 编辑状态，所有小复选框不选中
+      if (value) {
+        this.$store.commit('cart/toggleAllCheck', false)
+      } else {
+        this.$store.commit('cart/toggleAllCheck', true)
+      }
+    }
   }
 }
 </script>
