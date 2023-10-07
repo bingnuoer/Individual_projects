@@ -1,4 +1,4 @@
-import { getCartList } from '@/api/cart'
+import { changeCount, getCartList } from '@/api/cart'
 // 构建 购物车的vuex
 export default {
   namespaced: true,
@@ -24,6 +24,11 @@ export default {
       state.cartList.forEach(item => {
         item.isChecked = flag
       })
+    },
+    // 购物车 数量框修改数字
+    changeCount (state, { goodsId, value }) {
+      const obj = state.cartList.find(item => item.goods_id === goodsId)
+      obj.goods_num = value
     }
   },
   actions: {
@@ -35,6 +40,18 @@ export default {
         item.isChecked = true
       })
       context.commit('setCartList', data.list)
+    },
+
+    // 修改购物车 数量框数字 发送请求
+    async changeCountAction (context, obj) {
+      const { goodsId, value, skuId } = obj
+      // 先本地修改
+      context.commit('changeCount', {
+        goodsId,
+        value
+      })
+      // 再同步到后台
+      await changeCount(goodsId, value, skuId)
     }
 
   },

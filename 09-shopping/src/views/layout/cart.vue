@@ -3,7 +3,10 @@
     <van-nav-bar title="购物车" fixed />
     <!-- 购物车开头 -->
     <div class="cart-title">
-      <span class="all">共<i>{{ cartTotal || 0}}</i>件商品</span>
+      <span class="all"
+        >共<i>{{ cartTotal || 0 }}</i
+        >件商品</span
+      >
       <span class="edit">
         <van-icon name="edit" />
         编辑
@@ -14,19 +17,19 @@
     <div class="cart-list">
       <div class="cart-item" v-for="item in cartList" :key="item.goods_id">
         <!-- 控制小复选框 -->
-        <van-checkbox @click="toggleCheck(item.goods_id)" :value="item.isChecked"></van-checkbox>
+        <van-checkbox
+          @click="toggleCheck(item.goods_id)"
+          :value="item.isChecked"
+        ></van-checkbox>
         <div class="show">
-          <img
-            :src="item.goods.goods_image"
-            alt=""
-          />
+          <img :src="item.goods.goods_image" alt="" />
         </div>
         <div class="info">
-          <span class="tit text-ellipsis-2"
-            >{{ item.goods.goods_name }}</span
-          >
+          <span class="tit text-ellipsis-2">{{ item.goods.goods_name }}</span>
           <span class="bottom">
-            <div class="price">¥ <span>{{ item.goods.goods_price_min }}</span></div>
+            <div class="price">
+              ¥ <span>{{ item.goods.goods_price_min }}</span>
+            </div>
             <!-- 数量组件 -->
             <!-- <div class="count-box">
               <button class="minus">-</button>
@@ -34,7 +37,10 @@
               <button class="add">+</button>
             </div> -->
             <!-- 使用组件 -->
-            <countBox></countBox>
+            <!-- 既希望保留原本的形参，又需要通过调用函数传参 => 箭头函数包装一层 -->
+            <!-- CountBox所有事件都是@input -->
+            <!-- 从仓库拿数据 -->
+            <CountBox :value="item.goods_num" @input="value => changeCount(value, item.goods_id, item.goods_sku_id)"></CountBox>
           </span>
         </div>
       </div>
@@ -49,10 +55,16 @@
       <div class="all-total">
         <div class="price">
           <span>合计：</span>
-          <span>¥ <i class="totalPrice">{{ selPrice }}</i></span>
+          <span
+            >¥ <i class="totalPrice">{{ selPrice }}</i></span
+          >
         </div>
-        <div v-if="true" class="goPay" :class="{disabled : selCount === 0}">结算({{ selCount }})</div>
-        <div v-else class="delete" :class="{disabled : selCount === 0}">删除</div>
+        <div v-if="true" class="goPay" :class="{ disabled: selCount === 0 }">
+          结算({{ selCount }})
+        </div>
+        <div v-else class="delete" :class="{ disabled: selCount === 0 }">
+          删除
+        </div>
       </div>
     </div>
   </div>
@@ -61,14 +73,14 @@
 <script>
 // 使用组件：3步
 // 导入组件
-import countBox from '@/components/countBox.vue'
+import CountBox from '@/components/countBox.vue'
 // 将数据映射到页面
 import { mapGetters, mapState } from 'vuex'
 export default {
   name: 'CartPage',
   // 注册组件
   components: {
-    countBox // 数量小组件
+    CountBox // 数量小组件
   },
   computed: {
     isLogin () {
@@ -91,6 +103,15 @@ export default {
     toggleAllCheck () {
       // 对大复选框值取反 传去对应store
       this.$store.commit('cart/toggleAllCheck', !this.isAllChecked)
+    },
+    changeCount (value, goodsId, skuId) {
+      // 调用vuex的action,进行数量修改
+      // 从store拿数据
+      this.$store.dispatch('cart/changeCountAction', {
+        value,
+        goodsId,
+        skuId
+      })
     }
   }
 }
