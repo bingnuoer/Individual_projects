@@ -17,6 +17,13 @@ export default {
       const goods = state.cartList.find(item => item.goods_id === goodsId)
       // 复选框选中状态取反
       goods.isChecked = !goods.isChecked
+    },
+    // 大复选框 控制 小复选框
+    toggleAllCheck (state, flag) {
+      // 大复选框 的状态 设置给每个小复选框
+      state.cartList.forEach(item => {
+        item.isChecked = flag
+      })
     }
   },
   actions: {

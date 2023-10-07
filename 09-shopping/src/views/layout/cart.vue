@@ -41,7 +41,7 @@
     </div>
 
     <div class="footer-fixed">
-      <div class="all-check">
+      <div class="all-check" @click="toggleAllCheck">
         <van-checkbox :value="isAllChecked" icon-size="18"></van-checkbox>
         全选
       </div>
@@ -83,8 +83,14 @@ export default {
     }
   },
   methods: {
+    // 小复选框-大复选框
     toggleCheck (goodsId) {
       this.$store.commit('cart/toggleCheck', goodsId)
+    },
+    // 大复选框-小复选框
+    toggleAllCheck () {
+      // 对大复选框值取反 传去对应store
+      this.$store.commit('cart/toggleAllCheck', !this.isAllChecked)
     }
   }
 }
